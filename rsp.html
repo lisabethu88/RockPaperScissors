@@ -1,0 +1,101 @@
+<body>
+<script>
+
+const MAX_ROUNDS=5;
+    
+    function computerPlay()
+    {
+        let choices=["Rock", "Paper", "Scissors"];
+        let index = Math.floor(Math.random() * choices.length);
+        return choices[index];
+    }
+
+    function game()
+    {
+        //function call 
+        function playRound(playerSelection, computerSelection)
+        {
+            
+            if(playerSelection!= "Rock" && playerSelection!="Paper"&& playerSelection!= "Scissors")
+                return false;
+            else if( playerSelection==computerSelection)
+                return "tie";
+            
+            else if(playerSelection=="Rock" && computerSelection=="Scissors"
+            || playerSelection=="Scissors" && computerSelection == "Paper"
+            || playerSelection == "Paper"&& computerSelection =="Rock")
+                 return "player";
+            else
+                return "computer";
+            
+        }
+        
+      
+        //local variables
+        let result, countPlayer=0, countComp=0, countTie=0, playerSelection, computerSelection;
+
+        //loop for 5 rounds
+        for(let i=1;i<=MAX_ROUNDS;i++)
+        {
+            if(countPlayer>=Math.ceil(MAX_ROUNDS/2) || countComp >=Math.ceil(MAX_ROUNDS/2))
+                    break;
+
+            do{
+               playerSelection = prompt("Rock, paper, or scissors?");
+                computerSelection = computerPlay();
+
+                playerSelection=(playerSelection.substr(0,1)).toUpperCase()+
+                (playerSelection.substr(1)).toLowerCase();
+
+                result = playRound(playerSelection, computerSelection);
+
+                if(result==false)
+                   alert("Invalid move. Please try again.");
+                else
+                {
+                    if(result=="player")
+                    {
+                        countPlayer++;
+                        console.log(`Round ${i}: You win! ${playerSelection} beats ${computerSelection}`);
+                    }
+                    else if(result=="computer")
+                    {
+                        countComp++;
+                        console.log(`Round ${i}: You lose! ${computerSelection} beats ${playerSelection}`);
+                    }
+                    else if(result=="tie")
+                    {
+                        countTie++;
+                        console.log(`Round ${i}: Tie!`)
+                    }
+                }
+            }while(result==false);
+                 
+        }
+
+        function printResults(countComp, countPlayer, countTie)
+        {
+                if(countComp<countPlayer)
+                console.log("You win the game! Congratulations!");
+                else if(countComp>countPlayer)
+                console.log("You lose the game! Better luck next time.");
+                 else
+                {
+                if(countTie == MAX_ROUNDS)
+                    console.log(`Tie game. ${MAX_ROUNDS} ties in a row? Are you a hacker?!`); 
+                else
+                    console.log("Tie game.");
+                    
+                }  
+        }
+
+        printResults(countComp, countPlayer, countTie);
+
+    }
+
+    alert(`Welcome to Rock, Paper, Scissors! Best of ${MAX_ROUNDS} wins the game.`);
+    game();
+   
+
+</script>
+</body>
